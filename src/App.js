@@ -28,11 +28,6 @@ function App() {
   const [year, setYear] = useState('');
   const [posterColor, setPosterColor] = useState('');
 
-  function handleSubmitMovie(e) {
-    e.preventDefault;
-    setAllFilteredMovies([...allMovies]);
-  }
-
   function handleDeleteMovie() {}
 
   function handleFilteredMovies() {}
@@ -57,7 +52,6 @@ function App() {
         ) : (
           <div>Type to show a preview</div>
         )}
-        ;
         <div className="bottom">
           <div>
             Filter Movies By Title
