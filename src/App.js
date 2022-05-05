@@ -5,12 +5,28 @@ import MovieList from './MovieList';
 import MoviePoster from './MoviePoster';
 
 function App() {
-  const [allMovies, setAllMovies] = useState([]);
-  const [filteredMovies, setAllFilteredMovies] = useState([]);
-  const [movieFormTitle, setMovieFormTitle] = useState('');
-  const [movieFormDirector, setMovieFormDirector] = useState('');
-  const [movieFormYear, setMovieFormYear] = useState('');
-  const [movieFormColor, setMovieFormColor] = useState('');
+  const [allMovies, setAllMovies] = useState([
+    {
+      title: 'Everything Everywhere All At Once',
+      year: '2022',
+      director: 'Daniel Kwan',
+    },
+    {
+      title: 'Get Out',
+      year: '2017',
+      director: 'Jordan Peele',
+    },
+    {
+      title: 'Lemonade Film',
+      year: '2016',
+      director: 'Beyonce',
+    },
+  ]);
+  const [filteredMovies, setAllFilteredMovies] = useState(allMovies);
+  const [title, setTitle] = useState('');
+  const [director, setDirector] = useState('');
+  const [year, setYear] = useState('');
+  const [posterColor, setPosterColor] = useState('');
 
   function handleSubmitMovie(e) {
     e.preventDefault;
@@ -25,15 +41,30 @@ function App() {
     <div className="App">
       <header className="App-header">
         <MovieForm
-          movieFormTitle={movieFormTitle}
-          setMovieFormTitle-={setMovieFormTitle}
-          movieFormDirector={movieFormDirector}
-          setMovieFormDirector={setMovieFormDirector}
-          movieFormYear={movieFormYear}
-          setMovieFormYear={setMovieFormYear}
+          title={title}
+          setTitle-={setTitle}
+          director={director}
+          setDirector={setDirector}
+          year={year}
+          setYear={setYear}
+          posterColor={posterColor}
+          setPosterColor={setPosterColor}
+          allMovies={allMovies}
+          setAllMovies={setAllMovies}
         />
-        <MovieList />
-        <MoviePoster movieFormColor={movieFormColor} setMovieFormColor={setMovieFormColor} />
+        {title || year ? (
+          <MoviePoster posterColor={posterColor} title={title} year={year} director={director} />
+        ) : (
+          <div>Type to show a preview</div>
+        )}
+        ;
+        <div className="bottom">
+          <div>
+            Filter Movies By Title
+            <input onChange={(e) => filteredMovies(e.target.value)} />
+          </div>
+          <MovieList filteredMovies={filteredMovies} handleDeleteMovie={handleDeleteMovie} />
+        </div>
       </header>
     </div>
   );
