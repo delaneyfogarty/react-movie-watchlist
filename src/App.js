@@ -10,16 +10,19 @@ function App() {
       title: 'Everything Everywhere All At Once',
       year: '2022',
       director: 'Daniel Kwan',
+      posterColor: 'red',
     },
     {
       title: 'Get Out',
       year: '2017',
       director: 'Jordan Peele',
+      posterColor: 'rebeccapurple',
     },
     {
       title: 'Lemonade Film',
       year: '2016',
       director: 'Beyonce',
+      posterColor: 'gold',
     },
   ]);
   const [filteredMovies, setAllFilteredMovies] = useState(allMovies);
@@ -39,18 +42,18 @@ function App() {
       const matchingMovies = allMovies.filter((movie) =>
         movie.title.toLowerCase().includes(search.toLowerCase())
       );
-      // if there is a search argument, set the filtered goblins to the filtered goblins
-      // if the search argument is undefined, set the filtered goblins in state to just be the array of all goblins
       search ? setAllFilteredMovies(matchingMovies) : setAllFilteredMovies(search);
     }
   }
-
+  console.log(filteredMovies.length, 'filteredMovies.length');
+  console.log(filteredMovies, 'filteredMovies');
+  console.log(allMovies, 'allMovies');
   return (
     <div className="App">
       <header className="App-header">
         <MovieForm
           title={title}
-          setTitle-={setTitle}
+          setTitle={setTitle}
           director={director}
           setDirector={setDirector}
           year={year}
@@ -61,7 +64,7 @@ function App() {
           setAllMovies={setAllMovies}
         />
         {title || year ? (
-          <MoviePoster posterColor={posterColor} title={title} year={year} director={director} />
+          <MoviePoster title={title} year={year} director={director} posterColor={posterColor} />
         ) : (
           <div>Type to show a preview</div>
         )}
@@ -70,7 +73,10 @@ function App() {
             Filter Movies By Title
             <input onChange={(e) => handleFilteredMovies(e.target.value)} />
           </div>
-          <MovieList allMovies={allMovies} handleDeleteMovie={handleDeleteMovie} />
+          <MovieList
+            allMovies={filteredMovies.length ? filteredMovies : allMovies}
+            handleDeleteMovie={handleDeleteMovie}
+          />
         </div>
       </header>
     </div>

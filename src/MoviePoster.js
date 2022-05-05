@@ -1,15 +1,15 @@
 import React from 'react';
 
-export default function MoviePoster({ title, director, year, posterColor, handleDeleteMovie }) {
+export default function MoviePoster({ movie, handleDeleteMovie }) {
   return (
     <div
-      onClick={() => handleDeleteMovie && handleDeleteMovie(title)}
+      onClick={() => handleDeleteMovie && handleDeleteMovie(movie.title)}
       className="movie-poster"
-      style={{ backgroundColor: posterColor }}
+      style={{ backgroundColor: movie.posterColor }}
     >
-      <h3>{title}</h3>
-      <p>{director}</p>
-      <p>{year}</p>
+      <h3>{movie.title}</h3>
+      <p>{movie.director}</p>
+      <p>{movie.year}</p>
     </div>
   );
 }

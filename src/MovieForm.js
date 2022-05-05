@@ -15,10 +15,10 @@ export default function MovieForm({
   function handleSubmitMovie(e) {
     e.preventDefault();
     const newMovie = {
-      title,
-      director,
-      year,
-      posterColor,
+      title: title,
+      director: director,
+      year: year,
+      posterColor: posterColor,
     };
 
     setAllMovies([...allMovies, newMovie]);
@@ -30,7 +30,7 @@ export default function MovieForm({
   }
   return (
     <div>
-      <form onSubmit={handleSubmitMovie}>
+      <form onSubmit={(e) => handleSubmitMovie(e.target.value)}>
         <label>
           Title
           <input required value={title} onChange={(e) => setTitle(e.target.value)} />
