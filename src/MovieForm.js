@@ -30,7 +30,7 @@ export default function MovieForm({
   }
   return (
     <div>
-      <form onSubmit={(e) => handleSubmitMovie(e.target.value)}>
+      <form onSubmit={handleSubmitMovie}>
         <label>
           Title
           <input required value={title} onChange={(e) => setTitle(e.target.value)} />

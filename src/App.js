@@ -73,10 +73,7 @@ function App() {
             Filter Movies By Title
             <input onChange={(e) => handleFilteredMovies(e.target.value)} />
           </div>
-          <MovieList
-            allMovies={filteredMovies.length ? filteredMovies : allMovies}
-            handleDeleteMovie={handleDeleteMovie}
-          />
+          <MovieList allMovies={allMovies} handleDeleteMovie={handleDeleteMovie} />
         </div>
       </header>
     </div>
