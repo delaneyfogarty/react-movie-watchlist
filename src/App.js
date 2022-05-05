@@ -28,9 +28,22 @@ function App() {
   const [year, setYear] = useState('');
   const [posterColor, setPosterColor] = useState('');
 
-  function handleDeleteMovie() {}
+  function handleDeleteMovie(title) {
+    const indexToRemove = allMovies.findIndex((movie) => movie.title === title);
+    allMovies.splice(indexToRemove, 1);
+    setAllMovies([...allMovies]);
+  }
 
-  function handleFilteredMovies() {}
+  function handleFilteredMovies(search) {
+    if (search) {
+      const matchingMovies = allMovies.filter((movie) =>
+        movie.title.toLowerCase().includes(search.toLowerCase())
+      );
+      // if there is a search argument, set the filtered goblins to the filtered goblins
+      // if the search argument is undefined, set the filtered goblins in state to just be the array of all goblins
+      search ? setAllFilteredMovies(matchingMovies) : setAllFilteredMovies(search);
+    }
+  }
 
   return (
     <div className="App">
@@ -55,9 +68,9 @@ function App() {
         <div className="bottom">
           <div>
             Filter Movies By Title
-            <input onChange={(e) => filteredMovies(e.target.value)} />
+            <input onChange={(e) => handleFilteredMovies(e.target.value)} />
           </div>
-          <MovieList filteredMovies={filteredMovies} handleDeleteMovie={handleDeleteMovie} />
+          <MovieList allMovies={allMovies} handleDeleteMovie={handleDeleteMovie} />
         </div>
       </header>
     </div>
