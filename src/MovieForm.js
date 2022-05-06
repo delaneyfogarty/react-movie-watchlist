@@ -9,25 +9,8 @@ export default function MovieForm({
   setDirector,
   posterColor,
   setPosterColor,
-  allMovies,
-  setAllMovies,
+  handleSubmitMovie,
 }) {
-  function handleSubmitMovie(e) {
-    e.preventDefault();
-    const newMovie = {
-      title: title,
-      director: director,
-      year: year,
-      posterColor: posterColor,
-    };
-
-    setAllMovies([...allMovies, newMovie]);
-
-    setTitle('');
-    setDirector('');
-    setYear('');
-    setPosterColor('red');
-  }
   return (
     <div>
       <form onSubmit={handleSubmitMovie}>

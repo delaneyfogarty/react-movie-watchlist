@@ -37,17 +37,34 @@ function App() {
     setAllMovies([...allMovies]);
   }
 
-  function handleFilteredMovies(search) {
-    if (search) {
+  function handleFilteredMovies(movieSearch) {
+    if (movieSearch) {
       const matchingMovies = allMovies.filter((movie) =>
-        movie.title.toLowerCase().includes(search.toLowerCase())
+        movie.title.toLowerCase().includes(movieSearch.toLowerCase())
       );
-      search ? setAllFilteredMovies(matchingMovies) : setAllFilteredMovies(search);
+      setAllFilteredMovies([...matchingMovies]);
+    } else {
+      setAllFilteredMovies([...allMovies]);
     }
   }
-  console.log(filteredMovies.length, 'filteredMovies.length');
-  console.log(filteredMovies, 'filteredMovies');
-  console.log(allMovies, 'allMovies');
+
+  function handleSubmitMovie(e) {
+    e.preventDefault();
+    const newMovie = {
+      title: title,
+      director: director,
+      year: year,
+      posterColor: posterColor,
+    };
+
+    setAllMovies([...allMovies, newMovie]);
+
+    setTitle('');
+    setDirector('');
+    setYear('');
+    setPosterColor('red');
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -62,6 +79,7 @@ function App() {
           setPosterColor={setPosterColor}
           allMovies={allMovies}
           setAllMovies={setAllMovies}
+          handleSubmitMovie={handleSubmitMovie}
         />
         {title || year ? (
           <MoviePoster title={title} year={year} director={director} posterColor={posterColor} />
