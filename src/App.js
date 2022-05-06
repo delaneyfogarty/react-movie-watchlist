@@ -3,6 +3,8 @@ import { useState } from 'react';
 import MovieForm from './MovieForm';
 import MovieList from './MovieList';
 import MoviePoster from './MoviePoster';
+import { useEffect } from 'react';
+import { useMovieForm } from './useMovieForm';
 
 function App() {
   const [allMovies, setAllMovies] = useState([
@@ -26,10 +28,18 @@ function App() {
     },
   ]);
   const [filteredMovies, setAllFilteredMovies] = useState(allMovies);
-  const [title, setTitle] = useState('');
-  const [director, setDirector] = useState('');
-  const [year, setYear] = useState('');
-  const [posterColor, setPosterColor] = useState('');
+  const [filterQuery, setFilterQuery] = useState('');
+
+  const { title, setTitle, director, setDirector, year, setYear, posterColor, setPosterColor } =
+    useMovieForm();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => handleFilteredMovies(filterQuery), [filterQuery]);
+
+  function addMovie(newMovie) {
+    const updatedMovies = [...allMovies, newMovie];
+    setAllMovies(updatedMovies);
+  }
 
   function handleDeleteMovie(title) {
     const indexToRemove = allMovies.findIndex((movie) => movie.title === title);
@@ -38,14 +48,10 @@ function App() {
   }
 
   function handleFilteredMovies(movieSearch) {
-    if (movieSearch) {
-      const matchingMovies = allMovies.filter((movie) =>
-        movie.title.toLowerCase().includes(movieSearch.toLowerCase())
-      );
-      setAllFilteredMovies([...matchingMovies]);
-    } else {
-      setAllFilteredMovies([...allMovies]);
-    }
+    const matchingMovies = allMovies.filter((movie) =>
+      movie.title.toLowerCase().includes(movieSearch.toLowerCase())
+    );
+    movieSearch ? setAllFilteredMovies(matchingMovies) : setAllMovies(allMovies);
   }
 
   function handleSubmitMovie(e) {
@@ -80,6 +86,7 @@ function App() {
           allMovies={allMovies}
           setAllMovies={setAllMovies}
           handleSubmitMovie={handleSubmitMovie}
+          addMovie={addMovie}
         />
         {title || year ? (
           <MoviePoster title={title} year={year} director={director} posterColor={posterColor} />
@@ -89,9 +96,12 @@ function App() {
         <div className="bottom">
           <div>
             Filter Movies By Title
-            <input onChange={(e) => handleFilteredMovies(e.target.value)} />
+            <input onChange={(e) => setFilterQuery(e.target.value)} />
           </div>
-          <MovieList allMovies={allMovies} handleDeleteMovie={handleDeleteMovie} />
+          <MovieList
+            allMovies={filterQuery ? filteredMovies : allMovies}
+            handleDeleteMovie={handleDeleteMovie}
+          />
         </div>
       </header>
     </div>
